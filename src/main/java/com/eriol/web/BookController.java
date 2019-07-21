@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.eriol.entity.Appointment;
 import com.eriol.service.AppointmentService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,24 +50,29 @@ public class BookController {
 //		book.setNumber(10);
 //		bookService.updateOne(book);
 
-		Appointment byKeyWithBook = appointmentService.getByKeyWithBook(1002, 3);
+//		Appointment byKeyWithBook = appointmentService.getByKeyWithBook(1002, 3);
+
 
 //		model.addAttribute("list", list);
 		// list.jsp + model = ModelAndView
-		return byKeyWithBook.toString();// WEB-INF/jsp/"list".jsp
+		//PageInfo<Book> bookPageInfo = new PageInfo<>(bookService.getList());
+		Page page = PageHelper.startPage(1, 3);
+		List<Book> list = bookService.getList();
+		//bookPageInfo.getList().get(1)
+		return list.toString();// WEB-INF/jsp/"list".jsp
 	}
 
 	@RequestMapping(value = "/{bookId}/detail", method = RequestMethod.GET)
-	private String detail(@PathVariable("bookId") Long bookId, Model model) {
+	private Book detail(@PathVariable("bookId") Long bookId, Model model) {
 		if (bookId == null) {
-			return "redirect:/book/list";
+			return null;
 		}
 		Book book = bookService.getById(bookId);
 		if (book == null) {
-			return "forward:/book/list";
+			return null;
 		}
 		model.addAttribute("book", book);
-		return "detail";
+		return book;
 	}
 
 	// ajax json

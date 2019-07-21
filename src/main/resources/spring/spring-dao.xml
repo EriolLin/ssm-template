@@ -69,13 +69,41 @@
 		<property name="typeAliasesPackage" value="com.eriol.entity" />
 		<!-- 扫描sql配置文件:mapper需要的xml文件 -->
 		<property name="mapperLocations" value="classpath:mapper/*.xml" />
+		<!-- 配置mybatis插件 -->
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageInterceptor">
+					<property name="properties">
+						<!--使用下面的方式配置参数，一行配置一个 -->
+						<value>
+							<!-- 配置后，当 pageSize=0 或者 RowBounds.limit = 0 就会查询出全部的结果。 -->
+							pageSizeZero=true
+							<!-- reasonable 为 true，这时如果 pageNum<=0 会查询第一页，如果 pageNum>总页数 会查询最后一页。 -->
+							reasonable=true
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>
 	</bean>
 
 	<!-- 4.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<!-- 注入sqlSessionFactory -->
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-		<!-- 给出需要扫描Dao接口包 -->
-		<property name="basePackage" value="com.eriol.dao" />
+	<!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+		<!--&lt;!&ndash; 注入sqlSessionFactory &ndash;&gt;-->
+		<!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />-->
+		<!--&lt;!&ndash; 给出需要扫描Dao接口包 &ndash;&gt;-->
+		<!--<property name="basePackage" value="com.eriol.dao" />-->
+	<!--</bean>-->
+
+	<!-- 改为通用mapper特殊配置 -->
+	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.eriol.dao"/>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+		<property name="properties">
+			<value>
+
+			</value>
+		</property>
 	</bean>
+
 </beans>

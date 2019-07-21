@@ -1,10 +1,13 @@
 package com.eriol.entity;
 
+import javax.persistence.Id;
+
 /**
  * 图书实体
  */
 public class Book {
 
+	@Id
 	private long bookId;// 图书ID
 
 	private String name;// 图书名称

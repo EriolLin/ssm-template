@@ -2,6 +2,7 @@ package com.eriol.service.impl;
 
 import java.util.List;
 
+import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +35,17 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Book getById(long bookId) {
-		return bookDao.queryById(bookId);
+
+		Book book = bookDao.queryById(bookId);
+		return book;
 	}
 
 	@Override
 	public List<Book> getList() {
-		return bookDao.queryAll(0, 1000);
+
+		//return bookDao.queryAll();
+
+		return bookDao.selectAll();
 	}
 
 	@Override

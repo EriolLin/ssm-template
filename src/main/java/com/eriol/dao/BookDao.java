@@ -6,8 +6,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.eriol.entity.Book;
+import tk.mybatis.mapper.common.Mapper;
 
-public interface BookDao {
+public interface BookDao extends Mapper<Book> {
 
 	/**
 	 * 通过ID查询单本图书
@@ -20,12 +21,11 @@ public interface BookDao {
 	/**
 	 * 查询所有图书
 	 * 
-	 * @param offset 查询起始位置
-	 * @param limit 查询条数
+
 	 * @return
 	 */
-	List<Book> queryAll(@Param("offset") int offset, @Param("limit") int limit);
-
+//	List<Book> queryAll(@Param("offset") int offset, @Param("limit") int limit);
+	List<Book> queryAll();
 	/**
 	 * 减少馆藏数量
 	 * 
